@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using CoreAPI.Data.Resource;
+using FluentValidation.AspNetCore;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -32,8 +34,11 @@ namespace CoreAPI
                 // The commented code is the correct way to eliminate a REST exploit within JSON.net
                 // options.SerializaerSettings.TypeNameHandling = TypeNameHandling.None ;
                 options.SerializerSettings.TypeNameHandling = TypeNameHandling.All;
-            });
-            
+            })
+            .AddFluentValidation();
+            services.AddEntityFrameworkSqlServer();
+            services.AddDbContext<DevSandBoxContext>();
+ 
 
         }
 
