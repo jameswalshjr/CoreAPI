@@ -1,0 +1,12 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp1.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\CoreAPI.Data\CoreAPI.Data.csproj" />
+    <ProjectReference Include="..\CoreAPI.Domain\CoreAPI.Domain.csproj" />
+  </ItemGroup>
+
+</Project>

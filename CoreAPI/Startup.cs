@@ -1,4 +1,6 @@
-﻿using CoreAPI.Data.Resource;
+﻿using AutoMapper;
+using CoreAPI.Data.Resource;
+using CoreAPI.Domain.Mapping;
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -28,18 +30,24 @@ namespace CoreAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+
+            var config = new MapperConfiguration(cfg =>
+            {
+                cfg.AddProfile(new MappingProfile());
+            });
+            var mapper = config.CreateMapper();
+            services.AddSingleton(mapper);
+
             // Add framework services.
             services.AddMvc().AddJsonOptions(options =>
             {
                 // The commented code is the correct way to eliminate a REST exploit within JSON.net
-                // options.SerializaerSettings.TypeNameHandling = TypeNameHandling.None ;
-                options.SerializerSettings.TypeNameHandling = TypeNameHandling.All;
+                 options.SerializerSettings.TypeNameHandling = TypeNameHandling.None ;
+                //options.SerializerSettings.TypeNameHandling = TypeNameHandling.All;
             })
             .AddFluentValidation();
             services.AddEntityFrameworkSqlServer();
             services.AddDbContext<DevSandBoxContext>();
- 
-
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

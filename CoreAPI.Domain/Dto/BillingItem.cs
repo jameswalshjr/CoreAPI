@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace CoreAPI.Domain.Dto
 {
-    public class BillingAccount
+    public class BillingItem
     {
         [Key]
         public Guid Id { get; set; }
@@ -18,7 +18,7 @@ namespace CoreAPI.Domain.Dto
         public DateTime? EndDate { get; set; }
     }
 
-    public class BillingAccountValidator : AbstractValidator<BillingAccount>
+    public class BillingAccountValidator : AbstractValidator<BillingItem>
     {
         public BillingAccountValidator()
         {
