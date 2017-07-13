@@ -1,11 +1,12 @@
 ﻿using CoreAPI.Data.Repository.Interface;
 using CoreAPI.Domain.Dto;
+using CoreAPI.Engine.Engine.Interface;
 using System.Linq;
 
 
 namespace CoreAPI.Engine.BillingItemEngine
 {
-    public class BillingItemEngine
+    public class BillingItemEngine : IBillingItemEngine
     {
         private IBillingItemRepository itemRepo;
 

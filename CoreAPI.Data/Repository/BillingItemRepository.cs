@@ -9,7 +9,7 @@ using System.Text;
 
 namespace CoreAPI.Data.Repository
 {
-    class BillingItemRepository : IBillingItemRepository
+    public class BillingItemRepository : IBillingItemRepository
     {
         private DevSandBoxContext dbContext;
 

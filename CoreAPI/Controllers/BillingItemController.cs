@@ -7,7 +7,7 @@ using System.Net;
 
 namespace CoreAPI.Controllers
 {
-    
+    [Route("api/[controller]")]
     public class BillingItemController : Controller
     {
         private ILogger<BillingItemController> logger;
@@ -20,7 +20,7 @@ namespace CoreAPI.Controllers
         }
 
         [HttpGet]
-        [Route("api/V1/AllItems")]
+        [Route("Items")]
         public IActionResult AllItems()
         {
             try

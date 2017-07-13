@@ -1,11 +1,16 @@
 ﻿using AutoMapper;
+using CoreAPI.Data.Repository;
+using CoreAPI.Data.Repository.Interface;
 using CoreAPI.Data.Resource;
 using CoreAPI.Domain.Mapping;
+using CoreAPI.Engine.BillingItemEngine;
+using CoreAPI.Engine.Engine.Interface;
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using NLog.Extensions.Logging;
@@ -48,6 +53,9 @@ namespace CoreAPI
             .AddFluentValidation();
             services.AddEntityFrameworkSqlServer();
             services.AddDbContext<DevSandBoxContext>();
+            services.AddScoped<IBillingItemEngine, BillingItemEngine>();
+            services.AddScoped<IBillingItemRepository, BillingItemRepository>();
+           
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
