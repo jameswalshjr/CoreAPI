@@ -2,15 +2,17 @@
 using CoreAPI.Data.Repository;
 using CoreAPI.Data.Repository.Interface;
 using CoreAPI.Data.Resource;
+using CoreAPI.Domain.Dto;
+using CoreAPI.Domain.Entity;
 using CoreAPI.Domain.Mapping;
 using CoreAPI.Engine.BillingItemEngine;
 using CoreAPI.Engine.Engine.Interface;
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using NLog.Extensions.Logging;
@@ -28,16 +30,36 @@ namespace CoreAPI
                 .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true)
                 .AddEnvironmentVariables();
             Configuration = builder.Build();
+            HostingEnvironment = env;
         }
 
         public IConfigurationRoot Configuration { get; }
+        public IHostingEnvironment HostingEnvironment { get; set; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
 
+            services.AddAutoMapper();
+
+            if(HostingEnvironment.IsDevelopment())
+            {
+                services.AddCors(options =>
+                {
+                    options.AddPolicy("LocalHostPolicy",
+                        builder => builder.AllowAnyOrigin()
+                        .AllowAnyMethod()
+                        .AllowCredentials());
+                });
+            }
+           
+            
+            services.AddEntityFrameworkSqlServer();
+            services.AddAntiforgery(options => options.HeaderName = "X-XSRF-TOKEN");
+            services.AddDbContext<DevSandBoxContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DevSandBox"))); 
             var config = new MapperConfiguration(cfg =>
             {
+                cfg.CreateMap<BillingItem, BillingItemEntity>();
                 cfg.AddProfile(new MappingProfile());
             });
             var mapper = config.CreateMapper();
@@ -51,8 +73,8 @@ namespace CoreAPI
                 //options.SerializerSettings.TypeNameHandling = TypeNameHandling.All;
             })
             .AddFluentValidation();
-            services.AddEntityFrameworkSqlServer();
-            services.AddDbContext<DevSandBoxContext>();
+
+
             services.AddScoped<IBillingItemEngine, BillingItemEngine>();
             services.AddScoped<IBillingItemRepository, BillingItemRepository>();
            

@@ -1,15 +1,12 @@
 ﻿using CoreAPI.Domain.Dto;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 
 namespace CoreAPI.Data.Resource
 {
     public class DevSandBoxContext : DbContext
     {
-        public DevSandBoxContext(DbContextOptions<DevSandBoxContext> options)
-            : base(options)
-        {
-
-        }
+       
 
         public DbSet<BillingItem> BillingItems { get; set; }
 

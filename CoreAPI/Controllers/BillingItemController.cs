@@ -38,8 +38,9 @@ namespace CoreAPI.Controllers
             }
             catch (System.Exception ex)
             {
-                return StatusCode((int)HttpStatusCode.InternalServerError, ex.InnerException.Message);
                 logger.LogError(ex.InnerException.Message);
+                return StatusCode((int)HttpStatusCode.InternalServerError, ex.InnerException.Message);
+               
             }
             
 

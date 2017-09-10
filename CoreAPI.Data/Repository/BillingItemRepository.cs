@@ -2,10 +2,7 @@
 using CoreAPI.Data.Repository.Interface;
 using CoreAPI.Data.Resource;
 using CoreAPI.Domain.Dto;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace CoreAPI.Data.Repository
 {
